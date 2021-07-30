@@ -1,6 +1,6 @@
 # Twini-Golf
 
-Twini-Golf is a game created in 48 hours for the [2021 GMTK Game Jam](https://itch.io/jam/gmtk-2021) using C++ and [SDL2](https://www.libsdl.org/). It can be played on [itch.io](https://polymars.itch.io/twini-golf).
+Twini-Golf is a game created in 48 hours for the [2021 GMTK Game Jam](https://itch.io/jam/gmtk-2021) using C++ and [SDL2](https://www.libsdl.org/). It can be played on [itch.io](https://polymars.itch.io/twini-golf), but the current version contains memory leaks.
 
 ## Screenshots
 ![](https://img.itch.zone/aW1hZ2UvMTA4NTg3OS82MjU2MjM4LmdpZg==/347x500/e7XF4j.gif) 
