@@ -1,9 +1,14 @@
 name: build
 
-on: [push, pull_request]
-  paths-ignore:
-    - '**/*.md'
-    - '**/*.txt'
+on:
+  push:
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
 
 jobs:
   build-linux:
