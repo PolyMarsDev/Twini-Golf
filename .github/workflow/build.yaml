@@ -1,0 +1,43 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup
+        run: sudo apt-get install -y mingw-w64 libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
+      - name: build
+        run: |
+          g++ -c src/*.cpp -std=c++14 -O3 -Wall -m64 -I include && mkdir -p bin/release && g++ *.o -o bin/release/main -s -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+      - name: copy resources
+        run: |
+          cp -vr ./res/ ./bin/release/
+      - name: Upload linux Binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux
+          path: ./bin/release
+
+  build-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup
+        run: sudo apt-get install -y git python3 cmake
+      - name: setup emscripten
+        run: |
+          git clone https://github.com/emscripten-core/emsdk.git && cd emsdk && git pull && ./emsdk install latest && ./emsdk activate latest && source ./emsdk_env.sh && cd ..
+      - name: build
+        run: |
+          source ./emsdk/emsdk_env.sh && emcc src/main.cpp src/entity.cpp src/renderwindow.cpp src/ball.cpp src/tile.cpp src/hole.cpp -I include -O2 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s 'SDL2_IMAGE_FORMATS=["png"]' -s USE_SDL_TTF=2 -s USE_SDL_MIXER=2 --preload-file res -o index.html
+      - name: copy files to folder
+        run: |
+          mkdir emscripten && cp ./index.data ./emscripten && cp ./index.html ./emscripten  && cp ./index.js ./emscripten  && cp ./index.wasm ./emscripten
+      - name: Upload linux Binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: emscripten
+          path: ./emscripten
