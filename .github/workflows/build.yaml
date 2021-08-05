@@ -44,7 +44,7 @@ jobs:
       - name: copy files to folder
         run: |
           mkdir emscripten && cp ./index.data ./index.html ./index.js ./index.wasm ./emscripten
-      - name: Upload linux Binary
+      - name: Upload web Binary
         uses: actions/upload-artifact@v2
         with:
           name: emscripten
