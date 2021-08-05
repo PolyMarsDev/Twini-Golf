@@ -17,7 +17,7 @@ bool init()
 		std::cout << "HEY.. SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
 	if (!(IMG_Init(IMG_INIT_PNG)))
 		std::cout << "IMG_init has failed. Error: " << SDL_GetError() << std::endl;
-	if (!(TTF_Init()))
+	if ((TTF_Init())) //Returns: 0 on success, -1 on any error
 		std::cout << "TTF_init has failed. Error: " << SDL_GetError() << std::endl;
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	return true;
@@ -195,7 +195,7 @@ void loadLevel(int level)
 	}
 }
 
-const char* getStrokeText()
+std::string getStrokeText()
 {
 	int biggestStroke = 0;
 	if (balls[1].getStrokes() > balls[0].getStrokes())
@@ -211,7 +211,7 @@ const char* getStrokeText()
 	return s.c_str();
 }
 
-const char* getLevelText(int side)
+std::string getLevelText(int side)
 {
 	int tempLevel = (level + 1)*2 - 1;
 	if (side == 1)
