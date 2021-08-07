@@ -4,6 +4,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "RenderWindow.h"
 #include "Entity.h"
@@ -56,6 +57,9 @@ SDL_Color black = { 0, 0, 0 };
 TTF_Font* font32 = TTF_OpenFont("res/font/font.ttf", 32);
 TTF_Font* font48 = TTF_OpenFont("res/font/font.ttf", 48);
 TTF_Font* font24 = TTF_OpenFont("res/font/font.ttf", 24);
+
+std::string stroke_text;
+std::string level_text;
 
 Ball balls[2] = {Ball(Vector2f(0, 0), ballTexture, pointTexture, powerMeterTexture_FG, powerMeterTexture_BG, 0), Ball(Vector2f(0, 0), ballTexture, pointTexture, powerMeterTexture_FG, powerMeterTexture_BG, 1)};
 std::vector<Hole> holes = {Hole(Vector2f(0, 0), holeTexture), Hole(Vector2f(0, 0), holeTexture)};
@@ -206,9 +210,9 @@ const char* getStrokeText()
 	{
 		biggestStroke = balls[0].getStrokes();
 	}
-	std::string s = std::to_string(biggestStroke);
-	s = "STROKES: " + s;
-	return s.c_str();
+	stroke_text = std::to_string(biggestStroke);
+	stroke_text = "STROKES: " + stroke_text;
+	return stroke_text.c_str();
 }
 
 const char* getLevelText(int side)
@@ -218,9 +222,9 @@ const char* getLevelText(int side)
 	{
 		tempLevel++;
 	}
-	std::string s = std::to_string(tempLevel);
-	s = "HOLE: " + s;
-	return s.c_str();
+	level_text = std::to_string(tempLevel);
+	level_text = "HOLE: " + level_text;
+	return level_text.c_str();
 }
 
 void update()
