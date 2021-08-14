@@ -23,7 +23,7 @@ all: linux
 # Copy over res files from project
 prep:
 	mkdir -p $(OUT_PATH)
-	cp -a res/* bin
+	cp -vr res/* bin
 
 linux: prep
 	$(CC) -c $(SRC) $(CFLAGS) -I $(INCLUDE_PATH)
