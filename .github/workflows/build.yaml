@@ -34,7 +34,7 @@ jobs:
           sudo apt-get install -y git python3 cmake
       - name: Setup emscripten
         run: |
-          git clone https://https://github.com/emscripten-core/emsdk.git
+          git clone https://github.com/emscripten-core/emsdk.git
           cd emsdk
           git pull
           ./emsdk install latest
