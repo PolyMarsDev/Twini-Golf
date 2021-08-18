@@ -15,15 +15,21 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup dependencies
         run: |
-          sudo apt-get install -y mingw-w64 libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
+          sudo apt-get update
+          sudo apt-get install -y \
+            mingw-w64 \
+            libsdl2-dev \
+            libsdl2-image-dev \
+            libsdl2-ttf-dev \
+            libsdl2-mixer-dev
       - name: Build
         run: |
-          make linux
+          make
       - name: Upload Linux build
         uses: actions/upload-artifact@v2
         with:
-          name: linux
-          path: ./bin/release
+          name: linux-build
+          path: ./bin/releases/linux
 
   build-web:
     runs-on: ubuntu-latest
@@ -31,6 +37,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup dependencies
         run: |
+          sudo apt-get update
           sudo apt-get install -y git python3 cmake
       - name: Setup emscripten
         run: |
@@ -39,14 +46,13 @@ jobs:
           git pull
           ./emsdk install latest
           ./emsdk activate latest
-          source ./emsdk_env.sh
           cd ..
       - name: Build
         run: |
           source ./emsdk/emsdk_env.sh
           make web
-      - name: Upload Web build
+      - name: Upload web build
         uses: actions/upload-artifact@v2
         with:
-          name: emscripten
-          path: ./emscripten
+          name: web-build
+          path: ./bin/releases/web-build
