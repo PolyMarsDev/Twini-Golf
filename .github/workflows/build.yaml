@@ -45,13 +45,6 @@ jobs:
         run: |
           source ./emsdk/emsdk_env.sh
           make web
-      - name: Copy files to folder
-        run: |
-          mkdir emscripten
-          cp ./index.data ./emsripten
-          cp ./index.html ./emsripten
-          cp ./index.js ./emsripten
-          cp ./index.wasm ./emsripten
       - name: Upload Web build
         uses: actions/upload-artifact@v2
         with:
