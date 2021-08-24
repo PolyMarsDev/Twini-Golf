@@ -5,6 +5,7 @@
 
 #include "RenderWindow.h"
 #include "Entity.h"
+#include "config.hpp"
 
 RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h)
 	:window(NULL), renderer(NULL)
@@ -76,9 +77,10 @@ void RenderWindow::render(int x, int y, SDL_Texture* p_tex)
 	SDL_RenderCopy(renderer, p_tex, &src, &dst);
 }
 
-void RenderWindow::render(float p_x, float p_y, const char* p_text, TTF_Font* font, SDL_Color textColor)
+void RenderWindow::render(float p_x, float p_y, std::string p_text, TTF_Font* font, SDL_Color textColor)
 {
-		SDL_Surface* surfaceMessage = TTF_RenderText_Blended( font, p_text, textColor);
+
+		SDL_Surface* surfaceMessage = TTF_RenderText_Blended( font, p_text.c_str(), textColor);
 		SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
 
 		SDL_Rect src;
@@ -95,29 +97,29 @@ void RenderWindow::render(float p_x, float p_y, const char* p_text, TTF_Font* fo
 
 		SDL_RenderCopy(renderer, message, &src, &dst);
 		SDL_FreeSurface(surfaceMessage);
-	 	SDL_DestroyTexture(message);
+		SDL_DestroyTexture(message);
 }
 
-void RenderWindow::renderCenter(float p_x, float p_y, const char* p_text, TTF_Font* font, SDL_Color textColor)
+void RenderWindow::renderCenter(float p_x, float p_y, std::string p_text, TTF_Font* font, SDL_Color textColor)
 {
-		SDL_Surface* surfaceMessage = TTF_RenderText_Blended( font, p_text, textColor);
-		SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+	SDL_Surface* surfaceMessage = TTF_RenderText_Blended( font, p_text.c_str(), textColor);
+	SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
 
-		SDL_Rect src;
-		src.x = 0;
-		src.y = 0;
-		src.w = surfaceMessage->w;
-		src.h = surfaceMessage->h; 
+	SDL_Rect src;
+	src.x = 0;
+	src.y = 0;
+	src.w = surfaceMessage->w;
+	src.h = surfaceMessage->h; 
 
-		SDL_Rect dst;
-		dst.x = 640/2 - src.w/2 + p_x;
-		dst.y = 480/2 - src.h/2 + p_y;
-		dst.w = src.w;
-		dst.h = src.h;
+	SDL_Rect dst;
+	dst.x = 640/2 - src.w/2 + p_x;
+	dst.y = 480/2 - src.h/2 + p_y;
+	dst.w = src.w;
+	dst.h = src.h;
 
-		SDL_RenderCopy(renderer, message, &src, &dst);
-		SDL_FreeSurface(surfaceMessage);
-		SDL_DestroyTexture(message);
+	SDL_RenderCopy(renderer, message, &src, &dst);
+	SDL_FreeSurface(surfaceMessage);
+	SDL_DestroyTexture(message);
 }
 
 void RenderWindow::display()
