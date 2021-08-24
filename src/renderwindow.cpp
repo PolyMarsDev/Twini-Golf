@@ -5,7 +5,6 @@
 
 #include "RenderWindow.h"
 #include "Entity.h"
-#include "config.hpp"
 
 RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h)
 	:window(NULL), renderer(NULL)
