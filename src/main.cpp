@@ -16,9 +16,9 @@ bool init()
 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
 		std::cout << "HEY.. SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
 	if (!(IMG_Init(IMG_INIT_PNG)))
-		std::cout << "IMG_init has failed. Error: " << SDL_GetError() << std::endl;
-	if (!(TTF_Init()))
-		std::cout << "TTF_init has failed. Error: " << SDL_GetError() << std::endl;
+		std::cout << "IMG_init has failed. Error: " << IMG_GetError() << std::endl;
+	if ((TTF_Init()))
+		std::cout << "TTF_init has failed. Error: " << TTF_GetError() << std::endl;
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	return true;
 }
@@ -44,7 +44,7 @@ SDL_Texture* powerMeterTexture_overlay = window.loadTexture("res/gfx/powermeter_
 SDL_Texture* logoTexture = window.loadTexture("res/gfx/logo.png");
 SDL_Texture* click2start = window.loadTexture("res/gfx/click2start.png");
 SDL_Texture* endscreenOverlayTexture = window.loadTexture("res/gfx/end.png");
-SDL_Texture* splashBgTexture = window.loadTexture("res/gfx/splashbg.png");
+SDL_Texture* splashBgTexture = window.loadTexture("res/gfx/splashBg.png");
 
 Mix_Chunk* chargeSfx = Mix_LoadWAV("res/sfx/charge.mp3");
 Mix_Chunk* swingSfx = Mix_LoadWAV("res/sfx/swing.mp3");
@@ -56,6 +56,7 @@ SDL_Color black = { 0, 0, 0 };
 TTF_Font* font32 = TTF_OpenFont("res/font/font.ttf", 32);
 TTF_Font* font48 = TTF_OpenFont("res/font/font.ttf", 48);
 TTF_Font* font24 = TTF_OpenFont("res/font/font.ttf", 24);
+
 
 Ball balls[2] = {Ball(Vector2f(0, 0), ballTexture, pointTexture, powerMeterTexture_FG, powerMeterTexture_BG, 0), Ball(Vector2f(0, 0), ballTexture, pointTexture, powerMeterTexture_FG, powerMeterTexture_BG, 1)};
 std::vector<Hole> holes = {Hole(Vector2f(0, 0), holeTexture), Hole(Vector2f(0, 0), holeTexture)};
@@ -195,7 +196,7 @@ void loadLevel(int level)
 	}
 }
 
-const char* getStrokeText()
+std::string getStrokeText()
 {
 	int biggestStroke = 0;
 	if (balls[1].getStrokes() > balls[0].getStrokes())
@@ -208,10 +209,10 @@ const char* getStrokeText()
 	}
 	std::string s = std::to_string(biggestStroke);
 	s = "STROKES: " + s;
-	return s.c_str();
+	return s;
 }
 
-const char* getLevelText(int side)
+std::string getLevelText(int side)
 {
 	int tempLevel = (level + 1)*2 - 1;
 	if (side == 1)
@@ -220,7 +221,7 @@ const char* getLevelText(int side)
 	}
 	std::string s = std::to_string(tempLevel);
 	s = "HOLE: " + s;
-	return s.c_str();
+	return s;
 }
 
 void update()
@@ -405,6 +406,7 @@ void game()
 }
 int main(int argc, char* args[])
 {
+
 	loadLevel(level);
 	while (gameRunning)
 	{
@@ -414,6 +416,7 @@ int main(int argc, char* args[])
 	window.cleanUp();
 	TTF_CloseFont(font32);
 	TTF_CloseFont(font24);
+	TTF_CloseFont(font48);
 	SDL_Quit();
 	TTF_Quit();
 	return 0;
