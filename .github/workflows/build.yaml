@@ -9,11 +9,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-linux:
+  linux-build:
+    name: Linux build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup dependencies
+      - name: Install APT dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -21,25 +21,35 @@ jobs:
             libsdl2-dev \
             libsdl2-image-dev \
             libsdl2-ttf-dev \
-            libsdl2-mixer-dev
+            libsdl2-mixer-dev \
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Build
-        run: |
-          make
+        run: make
       - name: Upload Linux build
         uses: actions/upload-artifact@v2
         with:
           name: linux-build
           path: ./bin/releases/linux
 
-  build-web:
+  web-build:
+    name: Web build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup dependencies
+      - name: Install APT dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y git python3 cmake
-      - name: Setup emscripten
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup emscripten (cache)
+        uses: actions/cache@v2
+        id: emsdk-cache
+        with:
+          path: ./emsdk
+          key: emscripten-cache
+      - name: Setup emscripten (install)
+        if: steps.emsdk-cache.outputs.cache-hit != 'true'
         run: |
           git clone https://github.com/emscripten-core/emsdk.git
           cd emsdk
@@ -51,7 +61,7 @@ jobs:
         run: |
           source ./emsdk/emsdk_env.sh
           make web
-      - name: Upload web build
+      - name: Upload Web build
         uses: actions/upload-artifact@v2
         with:
           name: web-build
