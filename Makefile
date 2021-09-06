@@ -10,6 +10,7 @@ EMCCFLAGS  ?= -O2 -s USE_SDL=2 \
 
 SRC      := $(wildcard src/*.cpp)
 BASEPATH := bin/releases
+RES      := $(wildcard res/*)
 
 # Check the OS and assign variables
 ifeq ($(OS),Windows_NT)
@@ -17,10 +18,10 @@ SDL2PATH        ?= C:/SDL2-w64
 SDL2LIBPATH     := $(SDL2PATH)/lib
 SDL2INCLUDEPATH := $(SDL2PATH)/include
 
-LDFLAGS += -lmingw32 -L $(SDL2LIBPATH)
-CXXFLAGS  += -I $(SDL2INCLUDEPATH)
-OUTPATH := $(BASEPATH)/win
-OUTPUT  := $(OUTPATH)/tgolf.exe
+LDFLAGS  += -lmingw32 -L $(SDL2LIBPATH)
+CXXFLAGS += -I $(SDL2INCLUDEPATH)
+OUTPATH  := $(BASEPATH)/win
+OUTPUT   := $(OUTPATH)/tgolf.exe
 endif
 
 OUTPATH := $(BASEPATH)/linux
@@ -30,11 +31,11 @@ all: build
 
 normal-prep:
 	mkdir -p $(BASEPATH) $(OUTPATH)
-	cp -vr res/* $(OUTPATH)
+	cp -vr $(RES) $(OUTPATH)
 
 web-prep:
 	mkdir -p $(BASEPATH)/web-build
-	cp -vr res/* $(BASEPATH)/web-build
+	cp -vr $(RES) $(BASEPATH)/web-build
 
 build: normal-prep
 	$(CXX) -c $(SRC) $(CXXFLAGS)
@@ -47,4 +48,7 @@ web: web-prep
 	cp -t $(BASEPATH)/web-build index.html index.js \
 		index.data index.wasm
 
-.PHONY: all normal-prep web-prep build web
+clean:
+	rm -rf $(SRC:.c=.o) $(BASEPATH)
+
+.PHONY: all normal-prep web-prep build web clean
