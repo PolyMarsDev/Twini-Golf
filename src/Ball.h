@@ -1,7 +1,7 @@
 #pragma once
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
+#include "/opt/homebrew/Cellar/sdl2/2.0.16/include/SDL2/SDL.h"
+#include "/opt/homebrew/Cellar/sdl2_image/2.0.5/include/SDL2/SDL_image.h"
+#include "/opt/homebrew/Cellar/sdl2_mixer/2.0.4_2/include/SDL2/SDL_mixer.h"
 #include <vector>
 #include "Hole.h"
 #include "Tile.h"

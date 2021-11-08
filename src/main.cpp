@@ -1,15 +1,27 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
+#include "/opt/homebrew/Cellar/sdl2/2.0.16/include/SDL2/SDL.h"
+#include "/opt/homebrew/Cellar/sdl2_image/2.0.5/include/SDL2/SDL_image.h"
+#include "/opt/homebrew/Cellar/sdl2_ttf/2.0.15/include/SDL2/SDL_ttf.h"
+#include "/opt/homebrew/Cellar/sdl2_mixer/2.0.4_2/include/SDL2/SDL_mixer.h"
 #include <iostream>
 #include <vector>
 
 #include "RenderWindow.h"
 #include "Entity.h"
-#include "Ball.h"	
+#include "Ball.h"
 #include "Tile.h"
 #include "Hole.h"
+
+// bool init()
+// {
+// 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
+// 		std::cout << "HEY.. SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
+// 	if (!(IMG_Init(IMG_INIT_PNG)))
+// 		std::cout << "IMG_init has failed. Error: " << SDL_GetError() << std::endl;
+// 	if (!(TTF_Init()))
+// 		std::cout << "TTF_init has failed. Error: " << SDL_GetError() << std::endl;
+// 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+// 	return true;
+// }
 
 bool init()
 {
@@ -17,11 +29,16 @@ bool init()
 		std::cout << "HEY.. SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
 	if (!(IMG_Init(IMG_INIT_PNG)))
 		std::cout << "IMG_init has failed. Error: " << SDL_GetError() << std::endl;
-	if (!(TTF_Init()))
-		std::cout << "TTF_init has failed. Error: " << SDL_GetError() << std::endl;
+	if (TTF_Init()==-1){
+		std::cout << "TTF_init has failed. Error: "<< TTF_GetError() << std::endl;
+  }
+
+  std::cout<<"Opening audio now!"<<std::endl;
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	return true;
 }
+
+
 
 bool SDLinit = init();
 
@@ -63,7 +80,7 @@ std::vector<Hole> holes = {Hole(Vector2f(0, 0), holeTexture), Hole(Vector2f(0, 0
 std::vector<Tile> loadTiles(int level)
 {
 	std::vector<Tile> temp = {};
-	switch(level) 
+	switch(level)
 	{
 		case 0:
 			temp.push_back(Tile(Vector2f(64*3, 64*3), tileDarkTexture64));
@@ -185,7 +202,7 @@ void loadLevel(int level)
 			holes.at(0).setPos(24 + 32*4, 22 + 32*1);
 			holes.at(1).setPos(24 + 32*4 + 32*10, 22 + 32*11);
 		break;
-		case 4:	
+		case 4:
 			balls[0].setPos(24 + 32*2, 24 + 32*12);
 			balls[1].setPos(24 + 32*0 + 32*10, 24 + 32*5);
 
@@ -195,8 +212,42 @@ void loadLevel(int level)
 	}
 }
 
+// const char* getStrokeText()
+// {
+// 	int biggestStroke = 0;
+// 	if (balls[1].getStrokes() > balls[0].getStrokes())
+// 	{
+// 		biggestStroke = balls[1].getStrokes();
+// 	}
+// 	else
+// 	{
+// 		biggestStroke = balls[0].getStrokes();
+// 	}
+// 	std::string s = std::to_string(biggestStroke);
+// 	s = "STROKES: " + s;
+// 	return s.c_str();
+// }
+
+// const char* getLevelText(int side)
+// {
+// 	int tempLevel = (level + 1)*2 - 1;
+// 	if (side == 1)
+// 	{
+// 		tempLevel++;
+// 	}
+// 	std::string s = std::to_string(tempLevel);
+// 	s = "HOLE: " + s;
+// 	return s.c_str();
+// }
+
+//reserve string in memory that does not get deleted
+//as were returning char* from this!
+std::string stroke_text="";
+std::string level_text="";
+
 const char* getStrokeText()
 {
+  stroke_text="";
 	int biggestStroke = 0;
 	if (balls[1].getStrokes() > balls[0].getStrokes())
 	{
@@ -206,9 +257,9 @@ const char* getStrokeText()
 	{
 		biggestStroke = balls[0].getStrokes();
 	}
-	std::string s = std::to_string(biggestStroke);
-	s = "STROKES: " + s;
-	return s.c_str();
+  std::string s = std::to_string(biggestStroke);
+	stroke_text = "STROKES: " + s;
+	return stroke_text.c_str();
 }
 
 const char* getLevelText(int side)
@@ -219,13 +270,13 @@ const char* getLevelText(int side)
 		tempLevel++;
 	}
 	std::string s = std::to_string(tempLevel);
-	s = "HOLE: " + s;
-	return s.c_str();
+	level_text = "HOLE: " + s;
+	return level_text.c_str();
 }
 
 void update()
 {
-	
+
 	lastTick = currentTick;
 	currentTick = SDL_GetPerformanceCounter();
 	deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
@@ -290,7 +341,7 @@ void graphics()
 		window.render(b);
 	}
 	for (Tile& t : tiles)
-	{ 
+	{
 		window.render(t);
 	}
 	for (Ball& b : balls)
@@ -300,7 +351,7 @@ void graphics()
 			window.render(e);
 		}
 		window.render(b.getPowerBar().at(0).getPos().x, b.getPowerBar().at(0).getPos().y, powerMeterTexture_overlay);
-		
+
 	}
 	if (state != 2)
 	{

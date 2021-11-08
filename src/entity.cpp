@@ -1,6 +1,6 @@
 #include "Entity.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include "/opt/homebrew/Cellar/sdl2/2.0.16/include/SDL2/SDL.h"
+#include "/opt/homebrew/Cellar/sdl2_image/2.0.5/include/SDL2/SDL_image.h"
 
 Entity::Entity(Vector2f p_pos, SDL_Texture* p_tex)
 :pos(p_pos), tex(p_tex)
