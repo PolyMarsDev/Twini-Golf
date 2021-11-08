@@ -1,11 +1,11 @@
 #pragma once
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
+#include "/opt/homebrew/Cellar/sdl2/2.0.16/include/SDL2/SDL.h"
+#include "/opt/homebrew/Cellar/sdl2_ttf/2.0.15/include/SDL2/SDL_ttf.h"
+#include "/opt/homebrew/Cellar/sdl2_image/2.0.5/include/SDL2/SDL_image.h"
 
 #include "Entity.h"
 
-class RenderWindow 
+class RenderWindow
 {
 public:
 	RenderWindow(const char* p_title, int p_w, int p_h);

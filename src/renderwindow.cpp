@@ -1,6 +1,6 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+#include "/opt/homebrew/Cellar/sdl2/2.0.16/include/SDL2/SDL.h"
+#include "/opt/homebrew/Cellar/sdl2_image/2.0.5/include/SDL2/SDL_image.h"
+#include "/opt/homebrew/Cellar/sdl2_ttf/2.0.15/include/SDL2/SDL_ttf.h"
 #include <iostream>
 
 #include "RenderWindow.h"
@@ -42,7 +42,7 @@ void RenderWindow::clear()
 
 void RenderWindow::render(Entity& p_entity)
 {
-	SDL_Rect src; 
+	SDL_Rect src;
 	src.x = p_entity.getCurrentFrame().x;
 	src.y = p_entity.getCurrentFrame().y;
 	src.w = p_entity.getCurrentFrame().w;
@@ -59,7 +59,7 @@ void RenderWindow::render(Entity& p_entity)
 
 void RenderWindow::render(int x, int y, SDL_Texture* p_tex)
 {
-	SDL_Rect src; 
+	SDL_Rect src;
 	src.x = 0;
 	src. y = 0;
 	src.w;
@@ -85,7 +85,7 @@ void RenderWindow::render(float p_x, float p_y, const char* p_text, TTF_Font* fo
 		src.x = 0;
 		src.y = 0;
 		src.w = surfaceMessage->w;
-		src.h = surfaceMessage->h; 
+		src.h = surfaceMessage->h;
 
 		SDL_Rect dst;
 		dst.x = p_x;
@@ -107,7 +107,7 @@ void RenderWindow::renderCenter(float p_x, float p_y, const char* p_text, TTF_Fo
 		src.x = 0;
 		src.y = 0;
 		src.w = surfaceMessage->w;
-		src.h = surfaceMessage->h; 
+		src.h = surfaceMessage->h;
 
 		SDL_Rect dst;
 		dst.x = 640/2 - src.w/2 + p_x;
