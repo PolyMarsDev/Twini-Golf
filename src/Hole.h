@@ -1,6 +1,5 @@
 #pragma once
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include "stdafx.h"
 #include "Entity.h"
 #include "Math.h"
 
