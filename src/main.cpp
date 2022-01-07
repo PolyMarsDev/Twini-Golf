@@ -306,26 +306,26 @@ void graphics()
 	{
 		std::string StrokeText = getStrokeText(), LevelText = getLevelText(0);
 		window.render(640/4 - 132/2, 480 - 32, levelTextBgTexture);
-		window.renderCenter(-160, 240 - 16 + 3, getLevelText(0), font24, black);
-		window.renderCenter(-160, 240 - 16, getLevelText(0), font24, white);
+		window.renderCenter(-160, 240 - 16 + 3, LevelText.c_str(), font24, black);
+		window.renderCenter(-160, 240 - 16,LevelText.c_str(), font24, white);
 		
 		LevelText = getLevelText(1);
 
 		window.render(640/2 + 640/4 - 132/2, 480 - 32, levelTextBgTexture);
-		window.renderCenter(160, 240 - 16 + 3, getLevelText(1), font24, black);
-		window.renderCenter(160, 240 - 16, getLevelText(1), font24, white);
+		window.renderCenter(160, 240 - 16 + 3, LevelText.c_str(), font24, black);
+		window.renderCenter(160, 240 - 16, LevelText.c_str(), font24, white);
 
 		window.render(640/2 - 196/2, 0, uiBgTexture);
-		window.renderCenter(0, -240 + 16 + 3, getStrokeText(), font24, black);
-		window.renderCenter(0, -240 + 16, getStrokeText(), font24, white);
+		window.renderCenter(0, -240 + 16 + 3, StrokeText.c_str(), font24, black);
+		window.renderCenter(0, -240 + 16, StrokeText.c_str(), font24, white);
 	}
 	else
 	{
 		window.render(0, 0, endscreenOverlayTexture);
 		window.renderCenter(0, 3 - 32, "YOU COMPLETED THE COURSE!", font48, black);
 		window.renderCenter(0, -32, "YOU COMPLETED THE COURSE!", font48, white);
-		window.renderCenter(0, 3 + 32, getStrokeText(), font32, black);
-		window.renderCenter(0, 32, getStrokeText(), font32, white);
+		window.renderCenter(0, 3 + 32, StrokeText.c_str(), font32, black);
+		window.renderCenter(0, 32, StrokeText.c_str(), font32, white);
 	}
 	window.display();
 }
