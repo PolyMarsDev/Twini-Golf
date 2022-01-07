@@ -195,7 +195,7 @@ void loadLevel(int level)
 	}
 }
 
-const char* getStrokeText()
+std::string getStrokeText()
 {
 	int biggestStroke = 0;
 	if (balls[1].getStrokes() > balls[0].getStrokes())
@@ -208,10 +208,10 @@ const char* getStrokeText()
 	}
 	std::string s = std::to_string(biggestStroke);
 	s = "STROKES: " + s;
-	return s.c_str();
+	return s;
 }
 
-const char* getLevelText(int side)
+std::string getLevelText(int side)
 {
 	int tempLevel = (level + 1)*2 - 1;
 	if (side == 1)
@@ -220,7 +220,7 @@ const char* getLevelText(int side)
 	}
 	std::string s = std::to_string(tempLevel);
 	s = "HOLE: " + s;
-	return s.c_str();
+	return s;
 }
 
 void update()
@@ -304,9 +304,12 @@ void graphics()
 	}
 	if (state != 2)
 	{
+		std::string StrokeText = getStrokeText(), LevelText = getLevelText(0);
 		window.render(640/4 - 132/2, 480 - 32, levelTextBgTexture);
 		window.renderCenter(-160, 240 - 16 + 3, getLevelText(0), font24, black);
 		window.renderCenter(-160, 240 - 16, getLevelText(0), font24, white);
+		
+		LevelText = getLevelText(1);
 
 		window.render(640/2 + 640/4 - 132/2, 480 - 32, levelTextBgTexture);
 		window.renderCenter(160, 240 - 16 + 3, getLevelText(1), font24, black);
