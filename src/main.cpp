@@ -7,7 +7,7 @@
 
 #include "RenderWindow.h"
 #include "Entity.h"
-#include "Ball.h"	
+#include "Ball.h"
 #include "Tile.h"
 #include "Hole.h"
 
@@ -63,7 +63,7 @@ std::vector<Hole> holes = {Hole(Vector2f(0, 0), holeTexture), Hole(Vector2f(0, 0
 std::vector<Tile> loadTiles(int level)
 {
 	std::vector<Tile> temp = {};
-	switch(level) 
+	switch(level)
 	{
 		case 0:
 			temp.push_back(Tile(Vector2f(64*3, 64*3), tileDarkTexture64));
@@ -185,7 +185,7 @@ void loadLevel(int level)
 			holes.at(0).setPos(24 + 32*4, 22 + 32*1);
 			holes.at(1).setPos(24 + 32*4 + 32*10, 22 + 32*11);
 		break;
-		case 4:	
+		case 4:
 			balls[0].setPos(24 + 32*2, 24 + 32*12);
 			balls[1].setPos(24 + 32*0 + 32*10, 24 + 32*5);
 
@@ -225,7 +225,7 @@ const char* getLevelText(int side)
 
 void update()
 {
-	
+
 	lastTick = currentTick;
 	currentTick = SDL_GetPerformanceCounter();
 	deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
@@ -250,6 +250,12 @@ void update()
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
 				mouseDown = false;
+			}
+			break;
+            case SDL_KEYDOWN:
+			if (event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				gameRunning = false;
 			}
 			break;
 		}
@@ -290,7 +296,7 @@ void graphics()
 		window.render(b);
 	}
 	for (Tile& t : tiles)
-	{ 
+	{
 		window.render(t);
 	}
 	for (Ball& b : balls)
@@ -300,7 +306,7 @@ void graphics()
 			window.render(e);
 		}
 		window.render(b.getPowerBar().at(0).getPos().x, b.getPowerBar().at(0).getPos().y, powerMeterTexture_overlay);
-		
+
 	}
 	if (state != 2)
 	{
@@ -409,6 +415,7 @@ int main(int argc, char* args[])
 	while (gameRunning)
 	{
 		game();
+		SDL_Delay(30);
 	}
 
 	window.cleanUp();
