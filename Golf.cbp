@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Golf" />
+		<Option pch_mode="0" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Windows_Release">
+				<Option platforms="Windows;" />
+				<Option output="golf" prefix_auto="0" extension_auto="1" />
+				<Option object_output=".obj/Windows_Release" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Option projectResourceIncludeDirsRelation="1" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-g" />
+					<Add option="-W" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_IRR_STATIC_LIB_" />
+					<Add directory="../irrlicht-1.7.3/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="opengl32" />
+					<Add library="gdi32" />
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="winmm" />
+				</Linker>
+			</Target>
+			<Target title="Linux_Release">
+				<Option platforms="Unix;" />
+				<Option output="golf" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".obj/Linux_Release" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-g" />
+					<Add option="-W" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_IRR_STATIC_LIB_" />
+					<Add directory="/home/Dev/libs/game/Irrlicht-SVN/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="Xxf86vm" />
+					<Add library="GL" />
+					<Add directory="/home/Dev/libs/game/Irrlicht-SVN/lib/Linux" />
+				</Linker>
+			</Target>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="Windows_Release;Linux_Release;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-g" />
+			<Add option="-W" />
+		</Compiler>
+		<Linker>
+			<Add library="SDL2" />
+			<Add library="SDL2_mixer" />
+			<Add library="SDL2_image" />
+			<Add library="SDL2_ttf" />
+		</Linker>
+		<Unit filename="src/Ball.h" />
+		<Unit filename="src/Entity.h" />
+		<Unit filename="src/Hole.h" />
+		<Unit filename="src/Math.h" />
+		<Unit filename="src/RenderWindow.h" />
+		<Unit filename="src/Tile.h" />
+		<Unit filename="src/ball.cpp" />
+		<Unit filename="src/entity.cpp" />
+		<Unit filename="src/hole.cpp" />
+		<Unit filename="src/main.cpp" />
+		<Unit filename="src/renderwindow.cpp" />
+		<Unit filename="src/tile.cpp" />
+		<Extensions>
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
